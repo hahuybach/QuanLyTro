@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+img {
+  max-width: 100%;
+  /*width: 100%;*/
+}
+:root{
+  --green: #54b192 ;
+  --green-l: #A4CEC0;
+  --grey: #eaebec;
+  --gray: #625680;
+  --purple:#a18cd1;
+  --purple-l:#c4b1f0;
+  --smooth: all .3s ease-in;
+  --black: #000;
+}
+.container{
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.login_signup{
+  float: right;
+  margin-right: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.login_signup a{
+  /* position: ; */
+  text-decoration: none;
+  width: 60px;
+  border-radius: 50px;
+  background-color: var(--gray);
+  color: #fff;
+  padding:16px 30px;
+}
+.login_signup a:hover{
+  transition: var(--smooth);
+  background-color: var(--purple);
+}
+.navbar{
+  width: 300px;
+  padding-top: 50px;
+  /* border-right: solid 1px; */
+  text-align: center;
+}
+.navbar a{
+  display: block;
+  line-height: 3;
+  text-decoration: none;
+  padding: 0 30px;
+  margin: 20px 40px;
+  border-radius: 40px;
+  color: var(--black);
+}
+.navbar a:hover{
+  background-color: var(--purple-l);
+  transition: var(--smooth);
+  color: #fff !important;
+}
+.active{
+  background-color: var(--purple);
+  transition: var(--smooth);
+  color: #fff !important;
+}
+a{
+    text-decoration: none;
+}
+.container{
+  margin-top: 20px;
+  margin-left: 400px;
+  position: absolute;
+  top: 5%;
+  height: 800px;
+}
+
+#tenant{
+    background-color: var(--purple);
+    transition: var(--smooth);
+    color: #fff !important;
+}
+#room{
+    background-color: var(--purple);
+    transition: var(--smooth);
+    color: #fff !important;
+}
+#invoice{
+    background-color: var(--purple);
+    transition: var(--smooth);
+    color: #fff !important;
+}
+#balance{
+    background-color: var(--purple);
+    transition: var(--smooth);
+    color: #fff !important;
+}
