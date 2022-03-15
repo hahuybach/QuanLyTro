@@ -41,7 +41,7 @@
                 <nav class="navbar">
                     <a href="../room/search" class="navbar_item">Room</a>
                     <a href="../tenant/search" id="tenant"class="navbar_item">Tenant</a>
-                    <a href="../invoice" class="navbar_item">Invoice</a>
+                    <a href="../invoice/search" class="navbar_item">Invoice</a>
                     <a href="../balance" class="navbar_item">Balance</a>
                 </nav>
             </header>

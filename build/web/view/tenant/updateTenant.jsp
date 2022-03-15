@@ -34,12 +34,11 @@
 
         <header>
             <nav class="navbar">
-                <a href="#house" class="navbar_item">House</a>
-                <a href="#tenants" id="tenant"class="navbar_item">Tenant</a>
-                <a href="#invoices" class="navbar_item">Invoice</a>
-                <a href="#payments" class="navbar_item">Payment</a>
-                <a href="#balances" class="navbar_item">Balance</a>
-            </nav>
+                    <a href="../room/search" class="navbar_item">Room</a>
+                    <a href="../tenant/search" id="tenant"class="navbar_item">Tenant</a>
+                    <a href="../invoice/search" class="navbar_item">Invoice</a>
+                    <a href="../balance" class="navbar_item">Balance</a>
+                </nav>
         </header>
 
         <div class="container">

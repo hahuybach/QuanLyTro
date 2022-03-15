@@ -10,6 +10,7 @@ package model;
  * @author Bach
  */
 public class Invoice {
+    private String roomID;
     private int month;
     private int year;
     private int old_electric_num;
@@ -22,12 +23,39 @@ public class Invoice {
     private int cleaning_price;
     private int bike_num;
     private int bike_price;
-    private int bike_fee;
+    private int tv_num;
     private int cable_tv_price;
     private int internet_price;
     private int total;
     private int paid;
     private int debt;
+    private int roomPrice;
+
+    
+    public int getTv_num() {
+        return tv_num;
+    }
+
+    public void setTv_num(int tv_num) {
+        this.tv_num = tv_num;
+    }
+    
+    public int getRoomPrice() {
+        return roomPrice;
+    }
+
+    public void setRoomPrice(int roomPrice) {
+        this.roomPrice = roomPrice;
+    }
+    
+
+    public String getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(String roomID) {
+        this.roomID = roomID;
+    }
 
     public int getMonth() {
         return month;
@@ -123,14 +151,6 @@ public class Invoice {
 
     public void setBike_price(int bike_price) {
         this.bike_price = bike_price;
-    }
-
-    public int getBike_fee() {
-        return bike_fee;
-    }
-
-    public void setBike_fee(int bike_fee) {
-        this.bike_fee = bike_fee;
     }
 
     public int getCable_tv_price() {

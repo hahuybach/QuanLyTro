@@ -59,7 +59,27 @@ public class RoomDBContext extends DBContext {
         }
         return rooms;
     }
-
+    public ArrayList<Room> getRoomsFull() {
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            String sql = "SELECT IDPhong, p.IDLoaiPhong, TrangThai, lp.DonGia  \n"
+                    + "FROM PHONG p JOIN LoaiPhong lp\n"
+                    + "ON p.IDLoaiPhong = lp.IDLoaiPhong WHERE TrangThai='false'";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Room r = new Room();
+                r.setRoomID(rs.getString("IDPhong"));
+                r.setRoomTypeID(rs.getInt("IDLoaiPhong"));
+                r.setStatus(rs.getBoolean("TrangThai"));
+                r.setPrice(rs.getInt("DonGia"));
+                rooms.add(r);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rooms;
+    }
     public void changeStatus(String roomID) {
         String sql = "UPDATE [dbo].[Phong]\n"
                 + "SET [TrangThai] = ([TrangThai]-1)*(-1)\n"

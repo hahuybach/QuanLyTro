@@ -48,6 +48,26 @@
         <servlet-name>DetailRoomController</servlet-name>
         <servlet-class>controller.room.DetailRoomController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchInvoice</servlet-name>
+        <servlet-class>controller.invoice.SearchInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertInvoiceController</servlet-name>
+        <servlet-class>controller.invoice.InsertInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailInvoiceController</servlet-name>
+        <servlet-class>controller.invoice.DetailInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateInvoice</servlet-name>
+        <servlet-class>controller.invoice.UpdateInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteInvoiceController</servlet-name>
+        <servlet-class>controller.invoice.DeleteInvoiceController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -95,6 +115,26 @@
     <servlet-mapping>
         <servlet-name>DetailRoomController</servlet-name>
         <url-pattern>/room/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchInvoice</servlet-name>
+        <url-pattern>/invoice/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertInvoiceController</servlet-name>
+        <url-pattern>/invoice/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailInvoiceController</servlet-name>
+        <url-pattern>/invoice/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateInvoice</servlet-name>
+        <url-pattern>/invoice/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteInvoiceController</servlet-name>
+        <url-pattern>/invoice/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

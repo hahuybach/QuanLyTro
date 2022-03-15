@@ -27,7 +27,7 @@
             <nav class="navbar">
                 <a href="../room/search" class="navbar_item">Room</a>
                 <a href="../tenant/search" id="tenant"class="navbar_item">Tenant</a>
-                <a href="../invoice" class="navbar_item">Invoice</a>
+                <a href="../invoice/search" class="navbar_item">Invoice</a>
                 <a href="../balance" class="navbar_item">Balance</a>
             </nav>
         </header>
@@ -72,9 +72,9 @@
                         <div class="input-box">
                             <span class="details">Room</span>
                             <select name="room" onchange="submitForm();">
-                                <option value="-1">-----SELECT ROOM-----</option>
+                                <option value="-1">SELECT ROOM</option>
                                 <c:forEach items="${requestScope.rooms}" var="r">
-                                    <option value="${r.roomID}">Room ${r.roomID}</option>
+                                    <option value="${r.roomID}">Room ${r.roomID} (${r.status})</option>
                                 </c:forEach>
                             </select>
                         </div>

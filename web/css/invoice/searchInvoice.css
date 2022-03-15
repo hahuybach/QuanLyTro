@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13-Mar-2022, 12:09:36
+    Author     : Bach
+*/
+
+select{
+    border:1px solid #d7d7d7;
+    padding:5px;
+    border-radius:2px;
+}
+.button{
+    width: 100px;
+    border-radius: 20px;
+    background-color: var(--purple);
+    color: #fff;
+    padding:16px 20px;
+    align-items: center;
+    margin-left: 20px;
+    cursor: pointer;
+    border-color: #fff;
+}
+.button :hover{
+    background-color: var(--purple-l);
+    transition: var(--smooth);
+    color: #fff !important;
+}
+.container .title{
+	font-size: 25px;
+	font-weight: 500;
+	position: relative;
+}

@@ -7,19 +7,22 @@ package controller.invoice;
 
 import controller.BaseAuthController;
 import dal.InvoiceDBContext;
+import dal.RoomDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Invoice;
+import model.Room;
 
 /**
  *
  * @author Bach
  */
-public class DetailInvoiceController extends BaseAuthController {
+public class InsertInvoiceController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,13 +35,19 @@ public class DetailInvoiceController extends BaseAuthController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String roomID = request.getParameter("roomID");
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
-        InvoiceDBContext dbInvoice = new InvoiceDBContext();
-        Invoice invoice = dbInvoice.getInvoice(month, year, roomID);
-        request.setAttribute("invoice", invoice);
-        request.getRequestDispatcher("../view/invoice/detailInvoice.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet InsertInvoiceController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet InsertInvoiceController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +62,10 @@ public class DetailInvoiceController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RoomDBContext db = new RoomDBContext();
+        ArrayList<Room> rooms = db.getRoomsFull();
+        request.setAttribute("rooms", rooms);
+        request.getRequestDispatcher("../view/invoice/insertInvoice.jsp").forward(request, response);
     }
 
     /**
@@ -67,7 +79,25 @@ public class DetailInvoiceController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int month = Integer.parseInt(request.getParameter("month"));
+        int year = Integer.parseInt(request.getParameter("year"));
+        String roomID = request.getParameter("room");
+        int electric_num = Integer.parseInt(request.getParameter("electricity")) ;
+        int water_num = Integer.parseInt(request.getParameter("water")) ;
+        int bike_num = Integer.parseInt(request.getParameter("bike")) ;
+        int tv_num = Integer.parseInt(request.getParameter("tv"));
+        
+        Invoice i = new Invoice();
+        i.setMonth(month);
+        i.setYear(year);
+        i.setRoomID(roomID);
+        i.setElectric_num(electric_num);
+        i.setWater_num(water_num);
+        i.setBike_num(bike_num);
+        i.setTv_num(tv_num);
+        InvoiceDBContext db = new InvoiceDBContext();
+        db.insertInvoice(i);
+        response.sendRedirect("../invoice/search");
     }
 
     /**

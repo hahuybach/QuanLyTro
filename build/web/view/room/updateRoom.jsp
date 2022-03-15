@@ -25,11 +25,10 @@
 
         <header>
             <nav class="navbar">
-                <a href="#house" id="room" class="navbar_item">House</a>
-                <a href="#tenants" class="navbar_item">Tenant</a>
-                <a href="#invoices" class="navbar_item">Invoice</a>
-                <a href="#payments" class="navbar_item">Payment</a>
-                <a href="#balances" class="navbar_item">Balance</a>
+                <a href="../room/search" id="room" class="navbar_item">Room</a>
+                <a href="../tenant/search" class="navbar_item">Tenant</a>
+                <a href="../invoice/search" class="navbar_item">Invoice</a>
+                <a href="../balance" class="navbar_item">Balance</a>
             </nav>
         </header>
 
@@ -54,9 +53,9 @@
                                 <option ${(requestScope.room.status)?"selected=\"selected\"":""}value="empty">Empty</option>
                             </select>
                         </div>
-                    <div class="button">
-                        <input type="submit" value="Update Room">
-                    </div>
+                        <div class="button">
+                            <input type="submit" value="Update Room">
+                        </div>
                 </form>
             </div>
         </div>

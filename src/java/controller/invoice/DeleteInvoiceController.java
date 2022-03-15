@@ -19,7 +19,7 @@ import model.Invoice;
  *
  * @author Bach
  */
-public class DetailInvoiceController extends BaseAuthController {
+public class DeleteInvoiceController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,13 @@ public class DetailInvoiceController extends BaseAuthController {
         String roomID = request.getParameter("roomID");
         int month = Integer.parseInt(request.getParameter("month"));
         int year = Integer.parseInt(request.getParameter("year"));
+        Invoice i = new Invoice();
+        i.setRoomID(roomID);
+        i.setMonth(month);
+        i.setYear(year);
         InvoiceDBContext dbInvoice = new InvoiceDBContext();
-        Invoice invoice = dbInvoice.getInvoice(month, year, roomID);
-        request.setAttribute("invoice", invoice);
-        request.getRequestDispatcher("../view/invoice/detailInvoice.jsp").forward(request, response);
+        dbInvoice.deleteInvoice(i);
+        response.sendRedirect("../invoice/search");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
