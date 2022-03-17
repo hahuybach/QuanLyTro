@@ -24,7 +24,7 @@ public class InvoiceDBContext extends DBContext{
                     "WHERE ThangSuDung= ? and NamSuDung =?)\n" +
                     "SET @SoNuocCu = (SELECT [SoNuoc] FROM SuDung \n" +
                     "WHERE ThangSuDung=? and NamSuDung =?) \n" +
-                    "SELECT p.IDPhong, ThangSuDung,NamSuDung,SoDien,@SoDienCu as SoDienCu,Dien,((SoDien-@SoDienCu)*Dien) as TienDien,SoXe,PhiGuiXe, (SoXe*PhiGuiXe) as TienXe,SoNuoc,@SoNuocCu as SoNuocCu,Nuoc, ((SoNuoc-@SoNuocCu)*Nuoc) as TienNuoc,TH_Cap,SoTV, (SoTV*TH_Cap) as TienTHCap,DonGia,VeSinh,Internet,PhiDichVu, ((SoDien-@SoDienCu)*Dien+(SoXe*PhiGuiXe)+(SoNuoc-@SoNuocCu)*Nuoc+(SoTV*TH_Cap)+DonGia+VeSinh+PhiDichVu+Internet) as Total \n" +
+                    "SELECT p.IDPhong, ThangSuDung,NamSuDung,SoDien,@SoDienCu as SoDienCu,Dien,((SoDien-@SoDienCu)*Dien) as TienDien,SoXe,PhiGuiXe, (SoXe*PhiGuiXe) as TienXe,SoNuoc,@SoNuocCu as SoNuocCu,Nuoc, ((SoNuoc-@SoNuocCu)*Nuoc) as TienNuoc,TH_Cap,SoTV, (SoTV*TH_Cap) as TienTHCap,DonGia,VeSinh,Internet,PhiDichVu, ((SoDien-@SoDienCu)*Dien+(SoXe*PhiGuiXe)+(SoNuoc-@SoNuocCu)*Nuoc+(SoTV*TH_Cap)+DonGia+VeSinh+PhiDichVu+Internet) as Total,DaThanhToan \n" +
                     "FROM SuDung sd JOIN DichVu dv\n" +
                     "ON sd.IDDichVu = dv.IDDichVu\n" +
                     "JOIN HoaDon hd\n" +
@@ -77,23 +77,24 @@ public class InvoiceDBContext extends DBContext{
                 i.setService_price(rs.getInt("PhiDichVu"));
                 i.setInternet_price(rs.getInt("Internet"));
                 i.setCleaning_price(rs.getInt("VeSinh"));
+                i.setPaid(rs.getInt("DaThanhToan"));
                 return i;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }finally {
             if (stm != null) {
                 try {
                     stm.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -162,17 +163,17 @@ public class InvoiceDBContext extends DBContext{
             stm_insert_invoice.execute();
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 connection.rollback();
             } catch (SQLException ex1) {
-                Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
-                Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
             //close connection
         }
@@ -197,17 +198,17 @@ public class InvoiceDBContext extends DBContext{
             stm.execute();
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 connection.rollback();
             } catch (SQLException ex1) {
-                Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
-                Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
             //close connection
         }
@@ -242,17 +243,55 @@ public class InvoiceDBContext extends DBContext{
 
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 connection.rollback();
             } catch (SQLException ex1) {
-                Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
-                Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //close connection
+        }
+    }
+    public void updatePaid(Invoice i){
+        String sql = "DECLARE @IDHD int,@IDSD int\n"+
+                    "Select @IDHD = hd.IDHoaDon,@IDSD = sd.IDSuDung\n" +
+                    "from HoaDon hd \n" +
+                    "join ThuePhong tp \n" +
+                    "on hd.IDThuePhong = tp.ID\n" +
+                    "join SuDung sd\n" +
+                    "on hd.IDSuDung = sd.IDSuDung\n" +
+                    "where IDPhong = ? and ThangSuDung = ? and NamSuDung=?\n" +
+                    "UPDATE [dbo].[HoaDon]\n" +
+                    "SET \n" +
+                    "[DaThanhToan] = ?\n" +
+                    " WHERE IDHoaDon = @IDHD";
+                try {
+            connection.setAutoCommit(false);
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, i.getRoomID());
+            stm.setInt(2, i.getMonth());
+            stm.setInt(3, i.getYear());
+            stm.setInt(4, i.getPaid());
+            stm.execute();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
             //close connection
         }

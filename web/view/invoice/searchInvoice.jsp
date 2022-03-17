@@ -17,12 +17,12 @@
         <script src="https://kit.fontawesome.com/04a2d528b9.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script>
-            function deleteInvoice(roomID,month,year)
+            function deleteInvoice(roomID, month, year)
             {
                 var result = confirm("are you sure?");
                 if (result)
                 {
-                    window.location.href = 'delete?roomID='+roomID+'&month='+month+'&year='+year;
+                    window.location.href = 'delete?roomID=' + roomID + '&month=' + month + '&year=' + year;
                 }
             }
         </script>    
@@ -80,10 +80,10 @@
                         <option value="2022">2022</option>
                     </select>
                     <select name="roomID">
-                                <option value="-1">RoomID</option>
-                                <c:forEach items="${requestScope.rooms}" var="r">
-                                    <option value="${r.roomID}">Room ${r.roomID}</option>
-                                </c:forEach>
+                        <option value="-1">RoomID</option>
+                        <c:forEach items="${requestScope.rooms}" var="r">
+                            <option value="${r.roomID}">Room ${r.roomID}</option>
+                        </c:forEach>
                     </select>
                     <button class="button" type="submit" name="search">Search</button>
                 </div>
@@ -102,6 +102,7 @@
                         <th>Cable TV Price</th>
                         <th>Clean Price</th>
                         <th>Total</th>
+                        <th>Paid</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -117,6 +118,17 @@
                         <td>${requestScope.invoice.cable_tv_price*1}</td>
                         <td>${requestScope.invoice.cleaning_price*1}</td>
                         <td>${requestScope.invoice.total*1}</td>
+
+                        <c:choose>
+                            <c:when test="${(requestScope.invoice.total - requestScope.invoice.paid)>0}">
+                                <td style="text-align:center; color:red;"><i class="fa-solid fa-xmark"></i></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="text-align:center; color:green;"><i class="fa-solid fa-check"></i></td>
+                            </c:otherwise>    
+                            </c:choose>
+
+
                         <td>
                             <a href="../invoice/detail?roomID=${requestScope.invoice.roomID}&month=${requestScope.invoice.month}&year=${requestScope.invoice.year}">Detail</a><br/>
                             <a href="../invoice/update?roomID=${requestScope.invoice.roomID}&month=${requestScope.invoice.month}&year=${requestScope.invoice.year}">Update</a><br/>

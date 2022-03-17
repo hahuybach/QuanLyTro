@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/invoice/searchInvoice.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/tenant/searchTenant.css" rel="stylesheet" type="text/css"/>
         <title>Rent</title>
         <script src="https://kit.fontawesome.com/04a2d528b9.js" crossorigin="anonymous"></script>
@@ -115,7 +116,6 @@
                         <td style="text-align:right;">${requestScope.invoice.service_price}</td>
                         <td style="text-align:right;">${requestScope.invoice.service_price}</td>
                     </tr>
-                    <tr></tr>
                     <tr>
                         <td style="font-weight: 800;">Total</td>
                         <td></td>
@@ -124,9 +124,26 @@
                         <td></td>
                         <td style="text-align:right; font-weight: 800;">${requestScope.invoice.total}</td>
                     </tr>
+                    <tr>
+                        <td style="font-weight: 800;">Paid</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right; font-weight: 800;">${requestScope.invoice.paid}</td>
+                    </tr>
                 </tbody>
             </table>
-
+                    <div>
+                        <form action="charge" method="POST">
+                            <input type="hidden" name="roomID" value="${requestScope.invoice.roomID}">
+                            <input type="hidden" name="month" value="${requestScope.invoice.month}">
+                            <input type="hidden" name="year"  value="${requestScope.invoice.year}">
+                            Input charge number: <input type="text" name="paid">
+                            <button type="submit" name="charge">Charge</button>
+                        </form>
+                    </div>
+                    
                 
         </div>
     </body>

@@ -22,7 +22,9 @@ select{
     align-items: center;
     margin-left: 20px;
     cursor: pointer;
-    border-color: #fff;
+    border-color: #000;
+    border: none;
+    outline: none;
 }
 .button :hover{
     background-color: var(--purple-l);
