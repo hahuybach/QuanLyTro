@@ -53,6 +53,7 @@ public class UpdateTenantController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         int id = Integer.parseInt(request.getParameter("id"));
         TenantDBContext dbTenant = new TenantDBContext();
         Tenant tenant = dbTenant.getTenantByID(id);
@@ -77,6 +78,7 @@ public class UpdateTenantController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String raw_id = request.getParameter("id");
         String raw_name = request.getParameter("name");
         String raw_identificationNumber = request.getParameter("identificationNumber");

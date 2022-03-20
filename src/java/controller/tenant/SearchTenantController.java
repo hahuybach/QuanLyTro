@@ -33,9 +33,22 @@ public class SearchTenantController extends BaseAuthController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        TenantDBContext db = new TenantDBContext();
-//        ArrayList<Tenant> tenants = db.getTenants();
-//        request.setAttribute("tenants", tenants);
+        TenantDBContext db = new TenantDBContext();
+        int pagesize = 10;
+        String page = request.getParameter("page");
+        if(page ==null || page.trim().length() ==0)
+        {
+            page = "1";
+        }
+        int pageindex = Integer.parseInt(page);
+        ArrayList<Tenant> tenants = db.getTenants(pageindex,pagesize);
+        request.setAttribute("tenants", tenants);
+        
+        int count = db.count();
+        int totalpage = (count%pagesize==0)?(count/pagesize):(count/pagesize)+1;
+        
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pageindex", pageindex);
         request.getRequestDispatcher("../view/tenant/searchTenant.jsp").forward(request, response);
     }
 

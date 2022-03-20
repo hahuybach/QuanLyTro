@@ -51,6 +51,7 @@ public class InsertTenantController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         RoomDBContext db = new RoomDBContext();
         ArrayList<Room> rooms = db.getRooms();
         request.setAttribute("rooms", rooms);
@@ -68,6 +69,7 @@ public class InsertTenantController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String raw_name = request.getParameter("name");
         String raw_identificationNumber = request.getParameter("identificationNumber");
         String raw_phoneNumber = request.getParameter("phoneNumber");

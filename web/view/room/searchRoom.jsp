@@ -29,7 +29,9 @@
                         window.location.href = 'delete?id=' + id;
                     }
                 }
-            </script>    
+            </script>
+            <script src="../js/pagger.js" type="text/javascript"></script>
+            <link href="../css/room/pagger.css" rel="stylesheet" type="text/css"/>
         </head>
         <body>
             <section class="login_signup">
@@ -61,31 +63,35 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <c:forEach items="${requestScope.rooms}" var="r">
-                        <tr>
-                            <td>${r.roomID}</td>
-                            <td></td>
-                            <td>${r.price}</td>
-                            <td></td>
-                            <c:choose>
-                                <c:when test="${!r.status}">
-                                    <td style="text-align:center; color:red;"><i class="fa-solid fa-xmark"></i></td>
+                <c:forEach items="${requestScope.rooms}" var="r">
+                    <tr>
+                        <td>${r.roomID}</td>
+                        <td></td>
+                        <td>${r.price}</td>
+                        <td></td>
+                        <c:choose>
+                            <c:when test="${!r.status}">
+                                <td style="text-align:center; color:red;"><i class="fa-solid fa-xmark"></i></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td style="text-align:center; color:green;"><i class="fa-solid fa-check"></i></td>
+                                <td style="text-align:center; color:green;"><i class="fa-solid fa-check"></i></td>
                                 </c:otherwise>
                             </c:choose>
-                            <td>
-                                <a href="../room/detail?id=${r.roomID}">Detail</a>
-                                &ensp;
-                                <a href="../room/update?id=${r.roomID}">Update</a>
-                                &ensp;
-                                <a href="#" onclick="deleteRoom(${r.roomID})">Delete</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                        <td>
+                            <a href="../room/detail?id=${r.roomID}">Detail</a>
+                            &ensp;
+                            <a href="../room/update?id=${r.roomID}">Update</a>
+                            &ensp;
+                            <a href="#" onclick="deleteRoom(${r.roomID})">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
+            <div id="containerbot" class="pagger">  </div>
+        <script> 
+            pagger("containerbot",${requestScope.pageindex},${requestScope.totalpage},3);
+        </script>
         </div>
 
     </body>

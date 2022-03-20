@@ -59,6 +59,49 @@ public class RoomDBContext extends DBContext {
         }
         return rooms;
     }
+    public ArrayList<Room> getRooms(int pageindex, int pagesize) {
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            String sql = "SELECT IDPhong,IDLoaiPhong, TrangThai,DonGia From\n" +
+                        "(SELECT IDPhong, p.IDLoaiPhong, TrangThai, lp.DonGia ,ROW_NUMBER() OVER (ORDER BY IDPhong ASC) as row_index \n" +
+                        "FROM PHONG p JOIN LoaiPhong lp\n" +
+                        "ON p.IDLoaiPhong = lp.IDLoaiPhong) tbl\n" +
+                        "WHERE row_index >= (?-1)*? + 1\n" +
+                        "AND row_index <= ? * ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, pageindex);
+            stm.setInt(2, pagesize);
+            stm.setInt(3, pageindex);
+            stm.setInt(4, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Room r = new Room();
+                r.setRoomID(rs.getString("IDPhong"));
+                r.setRoomTypeID(rs.getInt("IDLoaiPhong"));
+                r.setStatus(rs.getBoolean("TrangThai"));
+                r.setPrice(rs.getInt("DonGia"));
+                rooms.add(r);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rooms;
+    }
+    public int count()
+    {
+        try {
+            String sql = "SELECT COUNT(*)as Total FROM Phong";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next())
+            {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
     public ArrayList<Room> getRoomsFull() {
         ArrayList<Room> rooms = new ArrayList<>();
         try {

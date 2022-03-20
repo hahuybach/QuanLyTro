@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/web/css/room/pagger.css</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/web/view/tenant/searchTenant.jsp</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/web/js/pagger.js</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/src/java/controller/balance/BalanceController.java</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/web/view/room/searchRoom.jsp</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/src/java/controller/tenant/SearchTenantController.java</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/src/java/controller/tenant/SearchByAJAX.java</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/web/css/room/searchRoom.css</file>
+            <file>file:/E:/FPT/Semester4%20FPT/PRJ301/project/code/ProjectQuanLyTro/web/css/tenant/searchTenant.css</file>
+        </group>
     </open-files>
 </project-private>

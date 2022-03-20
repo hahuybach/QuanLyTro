@@ -19,42 +19,42 @@ import model.Tenant;
  */
 public class InvoiceDBContext extends DBContext{
     public Invoice getInvoice(int month,int year, String roomID){
-        String sql = "DECLARE @SoDienCu int, @SoNuocCu int\n" +
-                    "SET @SoDienCu = (SELECT [SoDien] FROM SuDung\n" +
-                    "WHERE ThangSuDung= ? and NamSuDung =?)\n" +
-                    "SET @SoNuocCu = (SELECT [SoNuoc] FROM SuDung \n" +
-                    "WHERE ThangSuDung=? and NamSuDung =?) \n" +
-                    "SELECT p.IDPhong, ThangSuDung,NamSuDung,SoDien,@SoDienCu as SoDienCu,Dien,((SoDien-@SoDienCu)*Dien) as TienDien,SoXe,PhiGuiXe, (SoXe*PhiGuiXe) as TienXe,SoNuoc,@SoNuocCu as SoNuocCu,Nuoc, ((SoNuoc-@SoNuocCu)*Nuoc) as TienNuoc,TH_Cap,SoTV, (SoTV*TH_Cap) as TienTHCap,DonGia,VeSinh,Internet,PhiDichVu, ((SoDien-@SoDienCu)*Dien+(SoXe*PhiGuiXe)+(SoNuoc-@SoNuocCu)*Nuoc+(SoTV*TH_Cap)+DonGia+VeSinh+PhiDichVu+Internet) as Total,DaThanhToan \n" +
-                    "FROM SuDung sd JOIN DichVu dv\n" +
-                    "ON sd.IDDichVu = dv.IDDichVu\n" +
-                    "JOIN HoaDon hd\n" +
-                    "ON sd.IDSuDung = hd.IDSuDung\n" +
-                    "JOIN ThuePhong tp\n" +
-                    "ON tp.ID = hd.IDThuePhong\n" +
-                    "JOIN Phong p\n" +
-                    "ON tp.IDPhong = p.IDPhong \n" +
-                    "JOIN LoaiPhong lp\n" +
-                    "ON p.IDLoaiPhong = lp.IDLoaiPhong\n" +
-                    "WHERE ThangSuDung = ? and NamSuDung = ?\n" +
-                    "and p.IDPhong= ?" ;
+        String sql = "DECLARE @SoDienCu int, @SoNuocCu int,@IDSuDung int, @IDSuDungCu int\n" +
+"					SET @IDSuDung = (Select sd.IDSuDung from ThuePhong tp join HoaDon hd on tp.ID = hd.IDThuePhong join SuDung sd on hd.IDSuDung = sd.IDSuDung WHERE ThangSuDung = ? and NamSuDung = ? and IDPhong = ?)\n" +
+"					SET @IDSuDungCu = (Select sd.IDSuDung from ThuePhong tp join HoaDon hd on tp.ID = hd.IDThuePhong join SuDung sd on hd.IDSuDung = sd.IDSuDung WHERE ThangSuDung = ? and NamSuDung = ? and IDPhong = ?)\n" +
+"                    SET @SoDienCu = (SELECT [SoDien] FROM SuDung\n" +
+"                    WHERE IDSuDung = @IDSuDungCu)\n" +
+"                    SET @SoNuocCu = (SELECT [SoNuoc] FROM SuDung \n" +
+"                    WHERE IDSuDung = @IDSuDungCu)\n" +
+"                    SELECT p.IDPhong, ThangSuDung,NamSuDung,SoDien,@SoDienCu as SoDienCu,Dien,((SoDien-@SoDienCu)*Dien) as TienDien,SoXe,PhiGuiXe, (SoXe*PhiGuiXe) as TienXe,SoNuoc,@SoNuocCu as SoNuocCu,Nuoc, ((SoNuoc-@SoNuocCu)*Nuoc) as TienNuoc,TH_Cap,SoTV, (SoTV*TH_Cap) as TienTHCap,DonGia,VeSinh,Internet,PhiDichVu, ((SoDien-@SoDienCu)*Dien+(SoXe*PhiGuiXe)+(SoNuoc-@SoNuocCu)*Nuoc+(SoTV*TH_Cap)+DonGia+VeSinh+PhiDichVu+Internet) as Total, DaThanhToan \n" +
+"                    FROM SuDung sd JOIN DichVu dv\n" +
+"                    ON sd.IDDichVu = dv.IDDichVu\n" +
+"                    JOIN HoaDon hd\n" +
+"                    ON sd.IDSuDung = hd.IDSuDung\n" +
+"                    JOIN ThuePhong tp\n" +
+"                    ON tp.ID = hd.IDThuePhong\n" +
+"                    JOIN Phong p\n" +
+"                    ON tp.IDPhong = p.IDPhong \n" +
+"                    JOIN LoaiPhong lp\n" +
+"                    ON p.IDLoaiPhong = lp.IDLoaiPhong\n" +
+"                    WHERE hd.IDSuDung = @IDSuDung" ;
 
         PreparedStatement stm = null;
         
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(5, month);
-            stm.setInt(6, year);
-            stm.setString(7,roomID);
+            stm.setString(3, roomID);
+            stm.setString(6,roomID);
             if(month == 1){
-                stm.setInt(1,12);
-                stm.setInt(2,year-1);
-                stm.setInt(3,12);
-                stm.setInt(4,year-1);
-            }else{
-                stm.setInt(1,month-1);
+                stm.setInt(1,month);
                 stm.setInt(2,year);
-                stm.setInt(3,month-1);
-                stm.setInt(4,year);
+                stm.setInt(4,12);
+                stm.setInt(5,year-1);
+            }else{
+                stm.setInt(1,month);
+                stm.setInt(2,year);
+                stm.setInt(4,month-1);
+                stm.setInt(5,year);
             }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {

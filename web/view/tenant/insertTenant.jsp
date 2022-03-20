@@ -74,7 +74,11 @@
                             <select name="room" onchange="submitForm();">
                                 <option value="-1">SELECT ROOM</option>
                                 <c:forEach items="${requestScope.rooms}" var="r">
-                                    <option value="${r.roomID}">Room ${r.roomID} (${r.status})</option>
+                                    <option value="${r.roomID}">Room ${r.roomID} 
+                                        (<c:if test="${r.status}">Empty</c:if>
+                                        <c:if test="${!r.status}">Full</c:if>
+                                        )
+                                    </option>
                                 </c:forEach>
                             </select>
                         </div>

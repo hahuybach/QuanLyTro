@@ -44,7 +44,54 @@ public class TenantDBContext extends DBContext {
         }
         return tenants;
     }
-
+    public ArrayList<Tenant> getTenants(int pageindex, int pagesize) {
+        ArrayList<Tenant> tenants = new ArrayList<>();
+        try {
+            String sql = "select IDKhachHang, HoVaTen, CMND_CanCuoc, DienThoai, QueQuan, HKTT, GioiTinh, NamSinh From(\n" +
+"select IDKhachHang, HoVaTen, CMND_CanCuoc, DienThoai, QueQuan, HKTT, GioiTinh, NamSinh,ROW_NUMBER() OVER (ORDER BY IDKhachHang ASC) as row_index\n" +
+"from KhachHang ) tbl\n" +
+"WHERE row_index >= (?-1)*? + 1\n" +
+"AND row_index <= ? * ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, pageindex);
+            stm.setInt(2, pagesize);
+            stm.setInt(3, pageindex);
+            stm.setInt(4, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Tenant t = new Tenant();
+                t.setId(rs.getInt("IDKhachHang"));
+                t.setFullName(rs.getString("HoVaTen"));
+                t.setIdentificationNumber(rs.getString("CMND_CanCuoc"));
+                t.setPhoneNumber(rs.getString("DienThoai"));
+                t.setPoB(rs.getString("QueQuan"));
+                t.setPermanentResidence(rs.getString("HKTT"));
+                t.setGender(rs.getBoolean("GioiTinh"));
+                t.setDoB(rs.getDate("NamSinh"));
+                tenants.add(t);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TenantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenants;
+    }
+    
+    public int count()
+    {
+        try {
+            String sql = "SELECT COUNT(*)as Total FROM KhachHang";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next())
+            {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
     public Tenant getTenantByIdenNumber(String IdenNumber) {
         try {
             String sql = "select IDKhachHang, HoVaTen, CMND_CanCuoc, DienThoai, QueQuan, HKTT, GioiTinh, NamSinh\n"
